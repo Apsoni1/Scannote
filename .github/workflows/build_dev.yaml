@@ -1,0 +1,217 @@
+name: Dev Build
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  build:
+    name: Build Dev
+    runs-on: macos-latest
+
+    steps:
+      # 1️⃣ Checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2️⃣ Java
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      # 3️⃣ Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.38.7'
+          channel: 'stable'
+          cache: true
+
+      # 4️⃣ Pub cache
+      - name: Cache Pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+          key: pub-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: |
+            pub-${{ runner.os }}-
+
+      # 5️⃣ Dependencies
+      - name: Pub Get
+        run: flutter pub get
+
+      # 6️⃣ Restore Android Firebase
+      - name: Restore Android Firebase
+        run: |
+          mkdir -p android/app/src/dev
+          echo "${{ secrets.ANDROID_GSERVICES_DEV }}" | base64 --decode > android/app/src/dev/google-services.json
+
+      # 7️⃣ Restore iOS Firebase
+      - name: Restore iOS Firebase
+        run: |
+          mkdir -p ios/config/dev
+          echo "${{ secrets.IOS_GSERVICES_DEV }}" | base64 --decode > ios/config/dev/GoogleService-Info.plist
+
+      # 8️⃣ Cache Ruby gems (CocoaPods + Xcodeproj)
+      - name: Cache Ruby gems
+        uses: actions/cache@v4
+        with:
+          path: /Library/Ruby/Gems
+          key: gems-${{ runner.os }}-cocoapods-1.16.2-xcodeproj-1.27.0
+          restore-keys: |
+            gems-${{ runner.os }}-
+
+      # 9️⃣ Update CocoaPods and Xcodeproj
+      - name: Update CocoaPods and Xcodeproj
+        run: |
+          sudo gem install cocoapods -v 1.16.2
+          sudo gem install xcodeproj -v 1.27.0
+
+      # 🔟 Cache CocoaPods repo and downloaded pods
+      - name: Cache CocoaPods repo
+        uses: actions/cache@v4
+        with:
+          path: ~/.cocoapods
+          key: cocoapods-repo-${{ runner.os }}-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            cocoapods-repo-${{ runner.os }}-
+
+      - name: Cache Pods directory
+        uses: actions/cache@v4
+        with:
+          path: ios/Pods
+          key: pods-${{ runner.os }}-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            pods-${{ runner.os }}-
+
+      # 1️⃣1️⃣ iOS Pods
+      - name: Install iOS Pods
+        run: |
+          cd ios
+          pod repo update
+          pod install
+          cd ..
+
+      # 1️⃣2️⃣ Android Keystore
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+
+      - name: Create key.properties
+        run: |
+          cat > android/key.properties << EOF
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=keystore.jks
+          EOF
+
+      # 1️⃣4️⃣ Build APK
+      - name: Build APK
+        run: flutter build apk --flavor dev --release
+
+      # 1️⃣5️⃣ Build AAB
+      - name: Build AAB
+        run: flutter build appbundle --flavor dev --release
+
+      # 1️⃣6️⃣ Build IPA
+      - name: Build IPA
+        run: flutter build ipa --flavor dev --release --no-codesign
+
+      # 1️⃣7️⃣ Compress iOS
+      - name: Compress iOS
+        run: |
+          cd build
+          if [ -d "ios/archive" ]; then
+            tar -czf ios_dev.tar.gz ios/archive
+          elif [ -d "ios/iphoneos" ]; then
+            tar -czf ios_dev.tar.gz ios/iphoneos
+          else
+            tar -czf ios_dev.tar.gz ios
+          fi
+
+      # 1️⃣8️⃣ Prepare artifacts
+      - name: Prepare Artifacts
+        run: |
+          mkdir -p release-artifacts
+          
+          if [ -f "build/app/outputs/flutter-apk/app-dev-release.apk" ]; then
+            cp "build/app/outputs/flutter-apk/app-dev-release.apk" "release-artifacts/dev-android.apk"
+          fi
+          
+          if [ -f "build/app/outputs/bundle/devRelease/app-dev-release.aab" ]; then
+            cp "build/app/outputs/bundle/devRelease/app-dev-release.aab" "release-artifacts/dev-playstore.aab"
+          fi
+          
+          if [ -f "build/ios_dev.tar.gz" ]; then
+            cp "build/ios_dev.tar.gz" "release-artifacts/dev-ios.tar.gz"
+          fi
+          
+          ls -lh release-artifacts/
+
+      # 1️⃣9️⃣ Upload artifacts
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dev-builds
+          path: release-artifacts/
+          if-no-files-found: warn
+
+  release:
+    name: Release Dev
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dev-builds
+          path: ./artifacts
+
+      - name: List downloaded files
+        run: |
+          echo "Downloaded artifacts:"
+          ls -lhR ./artifacts
+
+      - name: Get short commit hash
+        id: commit
+        run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+
+      - name: Create or Update Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: dev-latest
+          name: Dev - Latest Build
+          files: ./artifacts/*
+          body: |
+            **Environment:** Development
+            **Build Date:** ${{ steps.date.outputs.date }}
+            **Commit:** ${{ steps.commit.outputs.sha }}
+            **Full SHA:** ${{ github.sha }}
+            
+            Auto-generated release from push to dev branch.
+            
+            **Files:**
+            - `dev-android.apk` - Android APK (sideload)
+            - `dev-playstore.aab` - Android App Bundle (Play Store)
+            - `dev-ios.tar.gz` - iOS Archive
+          draft: false
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

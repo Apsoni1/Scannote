@@ -1,0 +1,286 @@
+{
+  "@@locale": "en",
+  "appName": "ScanNote",
+  "scanExtractSave": "Scan, Extract, Save",
+  "home": "Home",
+  "history": "History",
+  "scanQrCode": "Scan QR Code",
+  "pointCameraAtQrCodeToScanInstantly": "Point camera at a QR code to scan instantly",
+  "pointYourCameraAtAQrCode": "Point your camera at a QR code ",
+  "extractTextOcr": "Extract Text (OCR)",
+  "extractTextFromImagesOrCamera": "Extract text from images or camera",
+  "welcome": "Welcome",
+  "create": "Create",
+  "reviewBeforeSaving": "Review Before Saving",
+  "settings": "Settings",
+  "noScanHistoryYet": "No scan history yet",
+  "yourSavedScansWillAppearHere": "Your saved scans will appear here",
+  "version1": "Version 1.0.0",
+  "signInToSyncYourScansAcrossDevices": "Sign in to sync your scans across devices",
+  "signingIn": "Signing in...",
+  "continueWithGoogle": "Continue with Google",
+  "newUserSameButtonCreatesYourAccountAutomatically": "New user? The same button creates your account automatically",
+  "failedToSignInPleaseTryAgain": "Failed to sign in. Please try again.",
+  "byContinuingYouAgreeToOurTermsOfServiceAndPrivacyPolicy": "By continuing, you agree to our Terms of Service and Privacy Policy",
+  "appearance": "APPEARANCE",
+  "theme": "Theme",
+  "dark": "Dark",
+  "light": "Light",
+  "captureImage": "Capture image",
+  "uploadImage": "Upload Image",
+  "yourAccountHasBeenDisabled": "Your account has been disabled.",
+  "emailAlreadyLinkedToAnotherAccount": "This email is already linked to another account.",
+  "signInCancelled": "Sign-in cancelled.",
+  "loginFailedPleaseTryAgain": "Login failed. Please try again.",
+  "language": "Language",
+  "savedTo": "Saved to : ",
+  "english": "English",
+  "account": "ACCOUNT",
+  "errorLoadingUser": "Error loading user",
+  "user": "User",
+  "noEmail": "No email",
+  "signedOut": "Signed Out",
+  "youHaveBeenSignedOut": "You have been signed out",
+  "about": "ABOUT",
+  "logOut": "Log out",
+  "privacyPolicy": "Privacy Policy",
+  "termsOfService": "Terms of Service",
+  "helpAndSupport": "Help & Support",
+  "extractFromCamera": "Extract from Camera",
+  "capturePhotoAndExtractTextInstantly": "Capture a photo and extract text instantly",
+  "extractFromImage": "Extract from Image",
+  "uploadExistingImageToExtractText": "Upload an existing image to extract text",
+  "extractText": "Extract Text",
+  "welcomeBack": "Welcome Back",
+  "loginSuccess": "Login successful!",
+  "qrScanError": "Something went wrong while scanning the QR code",
+  "noQrCodeFound": "No QR code found in image",
+  "uploadFromGallery": "Upload from Gallery",
+  "viewHistory": "View History",
+  "scannedContent": "Scanned Content",
+  "addCommentTitle": "Add Comment (Optional)",
+  "addANoteOrDescription": "Add a note or description...",
+  "selectGoogleSheet": "Select Google Sheet",
+  "saveToSheet": "Save to Sheet",
+  "selectImagePrompt": "Select an image to extract text",
+  "extractedText": "Extracted Text",
+  "textCopiedToClipboard": "Text copied to clipboard",
+  "selectSheet": "Select Sheet",
+  "cameraButtonLabel": "Camera",
+  "galleryButtonLabel": "Gallery",
+  "liveTextRecognition": "Live Text Recognition",
+  "cancelButton": "Cancel",
+  "confirmSave": "Confirm Save",
+  "data": "QR Data:",
+  "qrResult": "QR Result",
+  "comment": "Comment:",
+  "noCommentAdded": "(No comment added)",
+  "confirm": "Confirm",
+  "gallery": "Gallery",
+  "camera": "Camera",
+  "cancel": "Cancel",
+  "saveButton": "Save",
+  "allScansSuccessfullyMessage": "All scans synced successfully!",
+  "syncingMessage": "Syncing {count} scan",
+  "@syncingMessage": {
+    "description": "Message shown when syncing scans",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "syncingMessagePlural": "Syncing {count} scans",
+  "@syncingMessagePlural": {
+    "description": "Message shown when syncing multiple scans",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "confirmAndSaveTitle": "Confirm & Save",
+  "scanDetailsTitle": "Scan Details",
+  "selectSheetTitle": "Select Sheet",
+  "newSheetNameTitle": "New Sheet Name",
+  "enterSheetName": "Enter sheet name...",
+  "createSheetButton": "Create Sheet",
+  "switchToSelectSheet": "Switch to Select Sheet",
+  "createNewSheet": "Create New Sheet",
+  "noSheetsAvailable": "No sheets available. Create a new one!",
+  "scanSavedSuccessfully": "Scan saved successfully!",
+  "savedLocallyWillSyncWhenConnectionIsRestored": "Saved locally. Will sync when connection is restored.",
+  "modified": "Modified: {date}",
+  "@modified": {
+    "description": "Shows the modified date of a sheet",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "Jan 15, 2024"
+      }
+    }
+  },
+  "scanHistory": "Scan History",
+  "@scanHistory": {
+    "description": "Title for the history screen"
+  },
+  "searchScans": "Search scans...",
+  "@searchScans": {
+    "description": "Hint text for search field in history screen"
+  },
+  "noScansYet": "No scans yet",
+  "@noScansYet": {
+    "description": "Empty state message when there are no scans"
+  },
+  "noResultsFound": "No results found",
+  "@noResultsFound": {
+    "description": "Empty state message when search returns no results"
+  },
+  "commentLabel": "Comment",
+  "@commentLabel": {
+    "description": "Label for the comment field in scan card"
+  },
+  "copiedToClipboard": "Copied to clipboard",
+  "@copiedToClipboard": {
+    "description": "Success message after copying QR code"
+  },
+  "justNow": "just now",
+  "@justNow": {
+    "description": "Timestamp format for scans from seconds ago"
+  },
+  "minutesAgo": "{minutes}m ago",
+  "@minutesAgo": {
+    "description": "Timestamp format for scans from minutes ago",
+    "placeholders": {
+      "minutes": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "hoursAgo": "{hours}h ago",
+  "@hoursAgo": {
+    "description": "Timestamp format for scans from hours ago",
+    "placeholders": {
+      "hours": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "daysAgo": "{days}d ago",
+  "@daysAgo": {
+    "description": "Timestamp format for scans from days ago",
+    "placeholders": {
+      "days": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "failedToFetchHistory": "Failed to fetch history",
+  "@failedToFetchHistory": {
+    "description": "Error message when fetching history fails"
+  },
+  "refreshing": "Refreshing...",
+  "@refreshing": {
+    "description": "Message shown while refreshing history"
+  },
+  "cameraPermissionDenied": "Camera permission denied",
+  "@cameraPermissionDenied": {
+    "description": "Error message when camera permission is denied"
+  },
+  "scanningNotSupported": "QR scanning is not supported on this device",
+  "@scanningNotSupported": {
+    "description": "Error message when device doesn't support QR scanning"
+  },
+  "scannerControllerDisposed": "Scanner error: Controller disposed",
+  "@scannerControllerDisposed": {
+    "description": "Error message when scanner controller is disposed"
+  },
+  "scannerError": "Error: {errorCode}",
+  "@scannerError": {
+    "description": "Generic scanner error message",
+    "placeholders": {
+      "errorCode": {
+        "type": "String"
+      }
+    }
+  },
+  "@viewHistory": {
+    "description": "Label for the button to view history"
+  },
+  "qrCodeDetailsTitle": "QR Code Details",
+  "offlineMode": "Offline Mode",
+  "waitingToSyncMessage": "{count} scan waiting to sync",
+  "@waitingToSyncMessage": {
+    "description": "Message shown when offline with pending scans",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "noQrFound": "No QR code found in image",
+  "errorProcessingImage": "Error processing image",
+  "waitingToSyncMessagePlural": "{count} scans waiting to sync",
+  "@waitingToSyncMessagePlural": {
+    "description": "Message shown when offline with multiple pending scans",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "scanToSyncMessage": "{count} Scan to Sync",
+  "@scanToSyncMessage": {
+    "description": "Message shown when ready to sync",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "scanToSyncMessagePlural": "{count} Scans to Sync",
+  "@scanToSyncMessagePlural": {
+    "description": "Message shown when ready to sync multiple scans",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "connectionAvailableSync": "Connection available - click to sync",
+  "syncButtonLabel": "Sync",
+  "noInternetConnection": "No internet connection. Scans will sync when online.",
+  "cannotRefreshSheets": "No internet connection. Cannot refresh sheets.",
+  "cameraPermissionTitle": "Camera Permission Required",
+  "galleryPermissionTitle": "Gallery Permission Required",
+  "permissionRequiredMessage": "This app needs permission to access your device. Please grant permission to continue.",
+  "permissionPermanentlyDeniedMessage": "Permission is permanently denied. Please enable it in app settings.",
+  "openSettings": "Open Settings",
+  "retry": "Retry",
+  "loadMore": "Load More",
+  "cancelButtonLabel": "Cancel",
+  "exportData": "Export Data",
+  "downloadOrShareSheetsInMultipleFormats": "Download or share sheets in multiple formats",
+  "chooseExportFormat": "Choose Export Format",
+  "ocrExtracts": "OCR Extracts",
+  "pdfDocument": "PDF Document",
+  "formattedAndPrintablePdfFile": "Formatted and printable PDF file",
+  "share": "Share",
+  "download": "Download",
+  "excelSpreadsheet": "Excel Spreadsheet",
+  "editableXlsxFileWithFormulas": "Editable .xlsx file with formulas",
+  "csvFile": "CSV File",
+  "commaSeparatedValuesForDataTransfer": "Comma-separated values for data transfer",
+  "loading": "Loading...",
+  "fileDownloadedSuccessfully": "File downloaded successfully",
+  "downloadFailed": "Download failed"
+}
